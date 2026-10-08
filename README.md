@@ -230,3 +230,4 @@ MSE结果：
 
 手动中值滤波运行时间：5.35 秒
 实验全部运行完成！
+<img width="696" height="361" alt="image" src="https://github.com/user-attachments/assets/366b5f1c-fe63-4a69-8459-3c7549ef4a37" />
