@@ -24,21 +24,21 @@ Python；OpenCV；NumPy；Matplotlib；scikit-image。原始图像采用本次�
 
 使用 OpenCV 读取本次上传的原始图片。图像尺寸为 1169×1181，通道数为 3。读取 [100,100] 像素点后，程序实际输出 BGR = (251, 243, 183)，RGB = (183, 243, 251)。
 
-img = cv2.imread(
+    img = cv2.imread(
     "7dcf7830-7509-46bd-b302-b6ac5adf0f33.jpg"
-)
+    )
 
-b, g, r = img[100, 100]
+    b, g, r = img[100, 100]
 
-print("图像尺寸：", img.shape)
-print("BGR：", (b, g, r))
-print("RGB：", (r, g, b))
+    print("图像尺寸：", img.shape)
+    print("BGR：", (b, g, r))
+    print("RGB：", (r, g, b))
 
-代码实际输出：
+    代码实际输出：
 
-图像尺寸：(1181, 1169, 3)
-BGR：(251, 243, 183)
-RGB：(183, 243, 251)
+    图像尺寸：(1181, 1169, 3)
+    BGR：(251, 243, 183)
+    RGB：(183, 243, 251)
 
 <img width="1322" height="1378" alt="image" src="https://github.com/user-attachments/assets/663c64c4-19ff-45c4-8736-75bd9275d21f" />
 
@@ -46,16 +46,16 @@ RGB：(183, 243, 251)
 
 OpenCV 读取图像默认采用 BGR 通道顺序，使用 cv2.cvtColor() 转换为 RGB 后再利用 Matplotlib 显示。
 
-rgb_img = cv2.cvtColor(
+    rgb_img = cv2.cvtColor(
     img,
     cv2.COLOR_BGR2RGB
-)
+    )
 
-plt.figure(figsize=(8, 8))
-plt.imshow(rgb_img)
-plt.title("RGB Image")
-plt.axis("off")
-plt.show()
+    plt.figure(figsize=(8, 8))
+    plt.imshow(rgb_img)
+    plt.title("RGB Image")
+    plt.axis("off")
+    plt.show()
 <img width="1322" height="1378" alt="image" src="https://github.com/user-attachments/assets/6aa1237f-9431-4329-aff1-420bd43f25b3" />
 
 3.4 灰度图像转换
@@ -81,38 +81,38 @@ plt.show()
 np.random.seed(42)
 
 # 椒盐噪声
-sp_noise_img = random_noise(
+    sp_noise_img = random_noise(
     rgb_img,
     mode="s&p",
     amount=0.4
-)
+    )
 
 # 高斯噪声
-gus_noise_img = random_noise(
+    gus_noise_img = random_noise(
     rgb_img,
     mode="gaussian",
     mean=0.2,
     var=0.03
-)
+    )
 
-plt.figure(figsize=(15, 5))
-plt.subplot(1, 3, 1)
-plt.imshow(rgb_img)
-plt.title("Original Image")
-plt.axis("off")
+    plt.figure(figsize=(15, 5))
+    plt.subplot(1, 3, 1)
+    plt.imshow(rgb_img)
+    plt.title("Original Image")
+    plt.axis("off")
 
-plt.subplot(1, 3, 2)
-plt.imshow(sp_noise_img)
-plt.title("S&P Noise")
-plt.axis("off")
+    plt.subplot(1, 3, 2)
+    plt.imshow(sp_noise_img)
+    plt.title("S&P Noise")
+    plt.axis("off")
 
-plt.subplot(1, 3, 3)
-plt.imshow(gus_noise_img)
-plt.title("Gaussian Noise")
-plt.axis("off")
+    plt.subplot(1, 3, 3)
+    plt.imshow(gus_noise_img)
+    plt.title("Gaussian Noise")
+    plt.axis("off")
 
-plt.tight_layout()
-plt.show()
+    plt.tight_layout()
+    plt.show()
 <img width="2945" height="1017" alt="image" src="https://github.com/user-attachments/assets/470237d9-965f-432b-8572-21feae868edf" />
 
 3.6 均值、中值和高斯滤波
@@ -120,56 +120,55 @@ plt.show()
 采用 5×5 窗口分别进行均值滤波、中值滤波和高斯滤波，并分别处理椒盐噪声和高斯噪声。
 
 # 转换为 uint8
-sp_noise_uint8 = (sp_noise_img * 255).astype(np.uint8)
-gus_noise_uint8 = (gus_noise_img * 255).astype(np.uint8)
+    sp_noise_uint8 = (sp_noise_img * 255).astype(np.uint8)
+    gus_noise_uint8 = (gus_noise_img * 255).astype(np.uint8)
 
 # 均值滤波
-mean_sp = cv2.blur(sp_noise_img, (5, 5))
-mean_gus = cv2.blur(gus_noise_img, (5, 5))
+    mean_sp = cv2.blur(sp_noise_img, (5, 5))
+    mean_gus = cv2.blur(gus_noise_img, (5, 5))
 
 # 中值滤波
-mid_sp = cv2.medianBlur(sp_noise_uint8, 5)
-mid_gus = cv2.medianBlur(gus_noise_uint8, 5)
+    mid_sp = cv2.medianBlur(sp_noise_uint8, 5)
+    mid_gus = cv2.medianBlur(gus_noise_uint8, 5)
 
 # 高斯滤波
-gauss_sp = cv2.GaussianBlur(
+    gauss_sp = cv2.GaussianBlur(
     sp_noise_uint8, (5, 5), 0
-)
-gauss_gus = cv2.GaussianBlur(
+    )
+    gauss_gus = cv2.GaussianBlur(
     gus_noise_uint8, (5, 5), 0
-)
+    )
+    plt.figure(figsize=(14, 9))
 
-plt.figure(figsize=(14, 9))
+    plt.subplot(2, 3, 1)
+    plt.imshow(mean_sp)
+    plt.title("S&P + Mean")
+    plt.axis("off")
 
-plt.subplot(2, 3, 1)
-plt.imshow(mean_sp)
-plt.title("S&P + Mean")
-plt.axis("off")
+    plt.subplot(2, 3, 2)
+    plt.imshow(mid_sp)
+    plt.title("S&P + Median")
+    plt.axis("off")
 
-plt.subplot(2, 3, 2)
-plt.imshow(mid_sp)
-plt.title("S&P + Median")
-plt.axis("off")
+    plt.subplot(2, 3, 3)
+    plt.imshow(gauss_sp)
+    plt.title("S&P + Gaussian")
+    plt.axis("off")
 
-plt.subplot(2, 3, 3)
-plt.imshow(gauss_sp)
-plt.title("S&P + Gaussian")
-plt.axis("off")
+    plt.subplot(2, 3, 4)
+    plt.imshow(mean_gus)
+    plt.title("Gaussian + Mean")
+    plt.axis("off")
 
-plt.subplot(2, 3, 4)
-plt.imshow(mean_gus)
-plt.title("Gaussian + Mean")
-plt.axis("off")
+    plt.subplot(2, 3, 5)
+    plt.imshow(mid_gus)
+    plt.title("Gaussian + Median")
+    plt.axis("off")
 
-plt.subplot(2, 3, 5)
-plt.imshow(mid_gus)
-plt.title("Gaussian + Median")
-plt.axis("off")
-
-plt.subplot(2, 3, 6)
-plt.imshow(gauss_gus)
-plt.title("Gaussian + Gaussian")
-plt.axis("off")
+    plt.subplot(2, 3, 6)
+    plt.imshow(gauss_gus)
+    plt.title("Gaussian + Gaussian")
+    plt.axis("off")
 
 plt.tight_layout()
 plt.show()
@@ -179,26 +178,26 @@ plt.show()
 
 为辅助比较滤波结果，计算各结果相对于无噪原图的 MSE。MSE 数值越小，表示像素差异越小。
 
-def mse(a, b):
+    def mse(a, b):
     a = np.asarray(a).astype(np.float32)
     b = np.asarray(b).astype(np.float32)
     return np.mean((a - b) ** 2)
 
-print("MSE结果：")
-print("椒盐+均值:", mse(mean_sp * 255, rgb_img))
-print("椒盐+中值:", mse(mid_sp, rgb_img))
-print("椒盐+高斯:", mse(gauss_sp, rgb_img))
-print("高斯+均值:", mse(mean_gus * 255, rgb_img))
-print("高斯+中值:", mse(mid_gus, rgb_img))
-print("高斯+高斯:", mse(gauss_gus, rgb_img))
+    print("MSE结果：")
+    print("椒盐+均值:", mse(mean_sp * 255, rgb_img))
+    print("椒盐+中值:", mse(mid_sp, rgb_img))
+    print("椒盐+高斯:", mse(gauss_sp, rgb_img))
+    print("高斯+均值:", mse(mean_gus * 255, rgb_img))
+    print("高斯+中值:", mse(mid_gus, rgb_img))
+    print("高斯+高斯:", mse(gauss_gus, rgb_img))
 
-MSE结果：
-椒盐+均值: 1583.19
-椒盐+中值: 46.03
-椒盐+高斯: 1858.96
-高斯+均值: 2390.75
-高斯+中值: 2482.65
-高斯+高斯: 2393.65
+    MSE结果：
+    椒盐+均值: 1583.19
+    椒盐+中值: 46.03
+    椒盐+高斯: 1858.96
+    高斯+均值: 2390.75
+    高斯+中值: 2482.65
+    高斯+高斯: 2393.65
 
 3.8 手动实现彩色中值滤波
 
@@ -226,10 +225,10 @@ MSE结果：
 
     return filtered_img
 
-manual_mid = manual_median_filter_color(
+    manual_mid = manual_median_filter_color(
     sp_noise_uint8,
     kernel_size=5
-)
+    )
 
 
 # 实际运行输出
