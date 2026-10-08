@@ -14,11 +14,11 @@ Python；OpenCV；NumPy；Matplotlib；scikit-image。原始图像采用本次�
 
 首先导入实验所需的 OpenCV、scikit-image、NumPy 和 Matplotlib 库。
 
-import cv2
-from skimage.util import random_noise
-import numpy as np
-from matplotlib import pyplot as plt
-import os
+    import cv2
+    from skimage.util import random_noise
+    import numpy as np
+    from matplotlib import pyplot as plt
+    import os
 
 3.2 读取原始图像并获取像素值
 
@@ -204,7 +204,7 @@ MSE结果：
 
 按照参考文档的实验方法，分别对 R、G、B 三个通道进行处理，在每个像素位置建立 5×5 邻域窗口，计算窗口内像素的中值。
 
-def manual_median_filter_color(image, kernel_size=5):
+    def manual_median_filter_color(image, kernel_size=5):
     pad = kernel_size // 2
     filtered_img = np.zeros_like(image)
 
